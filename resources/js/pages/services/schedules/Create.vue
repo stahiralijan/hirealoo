@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/app/AppSidebarLayout.vue';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from "@/components/ui/button";
-
+import ServiceFrequency from '@/components/schedules/ServiceFrequency.vue';
 
 const props = defineProps({
-
+    scheduleConfig: Object
 });
 
 
@@ -20,7 +19,7 @@ const props = defineProps({
             </CardHeader>
             <CardContent>
 
-                <ServiceFrequency />
+                <ServiceFrequency :scheduleConfig="scheduleConfig" />
 
             </CardContent>
         </Card>

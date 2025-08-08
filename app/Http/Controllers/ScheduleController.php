@@ -20,7 +20,9 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-        return Inertia::render('services/schedules/Create');
+        return Inertia::render('services/schedules/Create', [
+            'scheduleConfig' => []
+        ]);
     }
 
     /**
