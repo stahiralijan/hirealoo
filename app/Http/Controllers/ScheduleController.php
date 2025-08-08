@@ -22,7 +22,7 @@ class ScheduleController extends Controller
     {
         return Inertia::render('services/schedules/Create', [
             'scheduleConfig' => [
-                'frequency' => 'weekly'
+                
             ]
         ]);
     }

@@ -73,9 +73,9 @@ watch(() => form.has_exact_time, (newVal) => {
 <template>
 
     <form class="w-2/3 space-y-6" @submit.prevent="onSubmitSchedule">
-        <FormField v-slot="{ componentField }" type="radio" name="frequency">
+        <FormField type="radio" name="frequency">
             <FormItem class="space-y-3">
-                <FormLabel>Notify me about...</FormLabel>
+                <FormLabel>Create a schedule that suits you...</FormLabel>
 
                 {{ form }}
 
