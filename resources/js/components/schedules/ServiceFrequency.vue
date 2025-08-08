@@ -11,54 +11,15 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { CircleMinus, CircleX, CrossIcon, PlusCircle } from 'lucide-vue-next';
+import { CircleX, PlusCircle } from 'lucide-vue-next';
 import { watch } from 'vue';
 
 const props = defineProps({
     scheduleConfig: Object
 })
 
-const days = [
-    {
-        id: "monday",
-        label: "Monday",
-    },
-    {
-        id: "tuesday",
-        label: "Tuesday",
-    },
-    {
-        id: "wednesday",
-        label: "Wednesday",
-    },
-    {
-        id: "thursday",
-        label: "Thursday",
-    },
-    {
-        id: "friday",
-        label: "Friday",
-    },
-    {
-        id: "saturday",
-        label: "Saturday",
-    },
-    {
-        id: "sunday",
-        label: "Sunday",
-    },
-    {
-        id: "specific-time-windows",
-        label: "Specify time window(s)"
-    },
-    {
-        id: "exact-time",
-        label: "Set exact time"
-    }
-] as const
-
 const form = useForm({
-    frequency: 'fortnightly',
+    frequency: props.scheduleConfig?.frequency || 'fortnightly',
     monday: false,
     tuesday: false,
     wednesday: false,
@@ -94,14 +55,18 @@ const onRemoveTimeWindow = (index: number) => {
 
 const onSubmitSchedule = () => form.post(route('schedules.store'));
 
-watch(form, (newValue) => {
-    console.log(newValue.specific_time_windows.value)
-    if (newValue.specific_time.value === false) {
-        newValue.specific_time_windows.value = [{
+watch(() => form.specific_time, (newValue) => {
+    if (newValue === false) {
+        form.specific_time_windows = [{
             index: 0,
             start_time: '',
             end_time: '',
         }];
+    }
+});
+watch(() => form.has_exact_time, (newVal) => {
+    if (newVal === false) {
+        form.exact_time = '';
     }
 });
 </script>
@@ -115,7 +80,7 @@ watch(form, (newValue) => {
                 {{ form }}
 
                 <FormControl>
-                    <RadioGroup v-model="form.frequency" class="flex flex-col space-y-1" v-bind="componentField">
+                    <RadioGroup v-model="form.frequency" class="flex flex-col space-y-1" >
                         <FormItem class="flex items-center space-y-0 gap-x-3">
                             <FormControl>
                                 <RadioGroupItem id="weekly" value="weekly" />
